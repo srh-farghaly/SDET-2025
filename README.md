@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/srh-farghaly/SDET-2025/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/srh-farghaly/SDET-2025/tree/main)
+
 ## Project Overview
 
 This repository contains a comprehensive QA automation project that performs **UI testing** using **NightwatchJS** and **API testing** using **Supertest** + **Jest**.
