@@ -3,8 +3,8 @@ class HomePage {
   constructor(browser) {
     this.browser = browser;
     this.selectors = {
-      searchInput: '#search_query_top, input[name="search_query"], form#searchbox input[type="text"]',
-      searchButton: 'button[name="submit_search"], form#searchbox button[type="submit"]'
+      searchInput: '#search_query_top',
+      searchButton: 'button[name="submit_search"]'
     };
   }
 
