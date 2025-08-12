@@ -69,7 +69,7 @@ module.exports = {
             '--ignore-certificate-errors',
             '--allow-insecure-localhost',
             '--headless=new',
-            '--window-size=1366,900'   // <- force desktop layout
+            '--window-size=1366,900' 
           ]
         }
       },
