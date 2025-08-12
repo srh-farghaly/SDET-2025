@@ -48,7 +48,8 @@ jobs:
           name: Run MyStore suite (Chrome) - search dress example
           command: |
             cd mystore-Automation
-            npx nightwatch --env chrome tests/search-dress.js
+            npm ci
+            npm run test
 
       # ---------- S3 Sample Site UI (force Chrome) ----------
       - restore_cache:
