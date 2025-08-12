@@ -65,7 +65,8 @@ module.exports = {
             '--no-sandbox',
             '--ignore-certificate-errors',
             '--allow-insecure-localhost',
-            '--headless=new'
+            '--headless=new',
+            '--window-size=1366,900'   // <- force desktop layout
           ]
         }
       },
