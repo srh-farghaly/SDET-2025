@@ -49,7 +49,7 @@ jobs:
           command: |
             cd mystore-Automation
             npm ci
-            npm run test
+            npx nightwatch --env chrome
 
       # ---------- S3 Sample Site UI (force Chrome) ----------
       - restore_cache:

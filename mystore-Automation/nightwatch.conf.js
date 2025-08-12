@@ -53,6 +53,9 @@ module.exports = {
         start_process: true,
         server_path: ''
       },
+      globals: {
+      waitForConditionTimeout: 15000
+    }
       
     },
     
