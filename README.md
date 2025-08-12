@@ -29,7 +29,7 @@ npm test
 ### **3- mystore-Automation**
 
 * Performs E2E testing for the **My Store** application.
-* Covers homepage search and other UI flows.
+* Covers homepage search for a certain item.
 * **Command to run locally** (example search test):
 
 ```bash
@@ -38,7 +38,7 @@ npx nightwatch tests/search-dress.js
 
 ### **4- s3-sample-site-e2e-tests**
 
-* End-to-end UI automation for a sample S3-hosted site.
+* Testing Navigation between different pages.
 * **Command to run locally**:
 
 ```bash
