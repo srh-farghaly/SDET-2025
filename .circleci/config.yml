@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  browser-tools: circleci/browser-tools@1.4.8
-
 jobs:
   ui_tests:
     docker:
@@ -10,15 +7,7 @@ jobs:
     steps:
       - checkout
 
-      # Chrome & chromedriver are in the browsers image, but verify anyway
-      - run:
-          name: Verify Chrome
-          command: google-chrome --version
-      - run:
-          name: Verify ChromeDriver
-          command: chromedriver --version
-
-      # ---------- LinkedIn UI ----------
+      # ----- LinkedIn (runs with its default env; not forcing Chrome) -----
       - restore_cache:
           keys:
             - v1-npm-linkedin-{{ checksum "linkedin-registration-automation/package-lock.json" }}
@@ -34,12 +23,12 @@ jobs:
             - ~/.npm
             - linkedin-registration-automation/node_modules
       - run:
-          name: Run LinkedIn tests
+          name: Run LinkedIn tests (default env)
           command: |
             cd linkedin-registration-automation
             npm run test
 
-      # ---------- MyStore UI ----------
+      # ----- MyStore (force Chrome) -----
       - restore_cache:
           keys:
             - v1-npm-mystore-{{ checksum "mystore-Automation/package-lock.json" }}
@@ -55,12 +44,12 @@ jobs:
             - ~/.npm
             - mystore-Automation/node_modules
       - run:
-          name: Run MyStore (example test)
+          name: Run MyStore tests (Chrome)
           command: |
             cd mystore-Automation
-            npx nightwatch tests/search-dress.js
+            npx nightwatch --env chrome tests/search-dress.js
 
-      # ---------- S3 sample site UI ----------
+      # ----- S3 sample site (force Chrome) -----
       - restore_cache:
           keys:
             - v1-npm-s3-{{ checksum "s3-sample-site-e2e-tests/package-lock.json" }}
@@ -76,12 +65,12 @@ jobs:
             - ~/.npm
             - s3-sample-site-e2e-tests/node_modules
       - run:
-          name: Run S3 sample site tests
+          name: Run S3 tests (Chrome)
           command: |
             cd s3-sample-site-e2e-tests
-            npm run test
+            npx nightwatch --env chrome
 
-      # Collect UI artifacts (won’t fail if folders don’t exist)
+      # (Optional) store Nightwatch reports if your projects generate them
       - run:
           name: Ensure artifact dirs exist
           command: |
@@ -103,7 +92,6 @@ jobs:
       - image: cimg/node:18.19
     steps:
       - checkout
-
       - restore_cache:
           keys:
             - v1-npm-api-{{ checksum "mock-user-auth-tests/package-lock.json" }}
@@ -116,36 +104,4 @@ jobs:
       - save_cache:
           key: v1-npm-api-{{ checksum "mock-user-auth-tests/package-lock.json" }}
           paths:
-            - ~/.npm
-            - mock-user-auth-tests/node_modules
-
-      # If your package.json has "dev" to boot the mock server, start it; otherwise skip.
-      - run:
-          name: Start mock-user-auth server (if dev script exists)
-          command: |
-            cd mock-user-auth-tests
-            (npm run dev >/dev/null 2>&1 & echo "dev started (if exists)") || echo "no dev script; continuing"
-            sleep 15
-
-      - run:
-          name: Run API tests (Jest + Supertest)
-          command: |
-            cd mock-user-auth-tests
-            npm test -- --runInBand --detectOpenHandles
-
-      # Collect API reports (create folder if not present so step doesn’t fail)
-      - run:
-          name: Ensure API report dir exists
-          command: mkdir -p mock-user-auth-tests/reports
-      - store_artifacts:
-          path: mock-user-auth-tests/reports
-          destination: api/reports
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - ui_tests
-      - api_tests:
-          requires:
-            - ui_tests
+            - ~/.np

@@ -54,7 +54,7 @@ describe('GET /users — Fetch user by token', () => {
   test('rejects when user was deleted but old token is used (401)', async () => {
     const user = buildUser();
     const createRes = await createUser(user);
-    expect(res.status).toBe(200);
+    expect(createRes.status).toBe(200);
     const loginRes = await authUser({ email: user.email, password: user.password });
     expect(loginRes.status).toBe(200);
     const token = loginRes.body.token;
