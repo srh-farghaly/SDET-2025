@@ -5,7 +5,7 @@ It validates critical user flows and API endpoints to ensure both **functionalit
 
 The project is divided into **four main components**:
 
-### ** 1- linkedin-registration-automation**
+### **1- linkedin-registration-automation**
 
 * Automates the LinkedIn registration workflow.
 * **Command to run locally**:
@@ -15,7 +15,7 @@ The project is divided into **four main components**:
 npm run test     # Runs on browser / LinkedIn by default
 ```
 
-### ** 2- mock-user-auth-tests**
+### **2- mock-user-auth-tests**
 
 * Uses the `mock-user-auth` npm module to simulate and validate authentication APIs.
 * Tests both **valid** and **invalid** scenarios for secure and correct responses.
@@ -36,7 +36,7 @@ npm test
 npx nightwatch tests/search-dress.js
 ```
 
-### ** 4- s3-sample-site-e2e-tests**
+### **4- s3-sample-site-e2e-tests**
 
 * End-to-end UI automation for a sample S3-hosted site.
 * **Command to run locally**:
