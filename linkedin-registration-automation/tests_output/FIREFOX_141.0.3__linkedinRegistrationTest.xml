@@ -5,9 +5,9 @@
 
   <testsuite name="linkedinRegistrationTest" id="linkedinRegistrationTest"
     errors="0" failures="0" hostname="" package="linkedinRegistrationTest" skipped="0"
-    tests="1" time="30.12" timestamp="">
+    tests="1" time="31.47" timestamp="">
   
-    <testcase name="Verify that user is registered successfully on linkedin" classname="linkedinRegistrationTest" time="30.12" assertions="8">
+    <testcase name="Verify that user is registered successfully on linkedin" classname="linkedinRegistrationTest" time="31.45" assertions="8">
 
     
 

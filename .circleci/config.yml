@@ -27,7 +27,7 @@ jobs:
           name: Run LinkedIn suite (default browser/env)
           command: |
             cd linkedin-registration-automation
-            npm run test
+            npx nightwatch --env chrome
 
       # ---------- MyStore UI (force Chrome) ----------
       - restore_cache:
