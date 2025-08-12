@@ -58,7 +58,7 @@ npm run test
 
 ## Running Tests via CircleCI
 
-Once CircleCI is configured (`.circleci/config.yml`), all UI and API tests will run automatically on each commit.
+CircleCI is configured (`.circleci/config.yml`), all UI and API tests will run automatically on each commit.
 
 ---
 
