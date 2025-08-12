@@ -3,17 +3,18 @@ version: 2.1
 jobs:
   ui_tests:
     docker:
+      # Includes Chrome, Chromedriver, Firefox, Geckodriver preinstalled
       - image: cimg/node:18.19-browsers
     steps:
       - checkout
 
-      # ----- LinkedIn (runs with its default env; not forcing Chrome) -----
+      # ---------- LinkedIn UI (uses its project default env) ----------
       - restore_cache:
           keys:
             - v1-npm-linkedin-{{ checksum "linkedin-registration-automation/package-lock.json" }}
             - v1-npm-linkedin-
       - run:
-          name: Install deps (linkedin-registration-automation)
+          name: Install deps (LinkedIn)
           command: |
             cd linkedin-registration-automation
             npm ci --prefer-offline --no-audit --no-fund
@@ -23,18 +24,18 @@ jobs:
             - ~/.npm
             - linkedin-registration-automation/node_modules
       - run:
-          name: Run LinkedIn tests (default env)
+          name: Run LinkedIn suite (default browser/env)
           command: |
             cd linkedin-registration-automation
             npm run test
 
-      # ----- MyStore (force Chrome) -----
+      # ---------- MyStore UI (force Chrome) ----------
       - restore_cache:
           keys:
             - v1-npm-mystore-{{ checksum "mystore-Automation/package-lock.json" }}
             - v1-npm-mystore-
       - run:
-          name: Install deps (mystore-Automation)
+          name: Install deps (MyStore)
           command: |
             cd mystore-Automation
             npm ci --prefer-offline --no-audit --no-fund
@@ -44,18 +45,18 @@ jobs:
             - ~/.npm
             - mystore-Automation/node_modules
       - run:
-          name: Run MyStore tests (Chrome)
+          name: Run MyStore suite (Chrome) - search dress example
           command: |
             cd mystore-Automation
             npx nightwatch --env chrome tests/search-dress.js
 
-      # ----- S3 sample site (force Chrome) -----
+      # ---------- S3 Sample Site UI (force Chrome) ----------
       - restore_cache:
           keys:
             - v1-npm-s3-{{ checksum "s3-sample-site-e2e-tests/package-lock.json" }}
             - v1-npm-s3-
       - run:
-          name: Install deps (s3-sample-site-e2e-tests)
+          name: Install deps (S3 sample site)
           command: |
             cd s3-sample-site-e2e-tests
             npm ci --prefer-offline --no-audit --no-fund
@@ -65,14 +66,14 @@ jobs:
             - ~/.npm
             - s3-sample-site-e2e-tests/node_modules
       - run:
-          name: Run S3 tests (Chrome)
+          name: Run S3 suite (Chrome)
           command: |
             cd s3-sample-site-e2e-tests
-            npx nightwatch --env chrome
+            npm run test
 
-      # (Optional) store Nightwatch reports if your projects generate them
+      # ---------- Collect UI reports (optional, won’t fail if missing) ----------
       - run:
-          name: Ensure artifact dirs exist
+          name: Ensure UI report dirs exist
           command: |
             mkdir -p linkedin-registration-automation/tests_output
             mkdir -p mystore-Automation/tests_output
@@ -92,16 +93,49 @@ jobs:
       - image: cimg/node:18.19
     steps:
       - checkout
+
       - restore_cache:
           keys:
             - v1-npm-api-{{ checksum "mock-user-auth-tests/package-lock.json" }}
             - v1-npm-api-
       - run:
-          name: Install deps (mock-user-auth-tests)
+          name: Install deps (API - mock-user-auth-tests)
           command: |
             cd mock-user-auth-tests
             npm ci --prefer-offline --no-audit --no-fund
       - save_cache:
           key: v1-npm-api-{{ checksum "mock-user-auth-tests/package-lock.json" }}
           paths:
-            - ~/.np
+            - ~/.npm
+            - mock-user-auth-tests/node_modules
+
+      # Start the mock server ONLY if your package.json has a "dev" script.
+      - run:
+          name: Start mock-user-auth server (if dev script exists)
+          command: |
+            cd mock-user-auth-tests
+            (npm run dev >/dev/null 2>&1 & echo "started dev") || echo "no dev script; skipping"
+            sleep 15
+
+      - run:
+          name: Run API tests (Jest + Supertest)
+          command: |
+            cd mock-user-auth-tests
+            npm test -- --runInBand --detectOpenHandles
+
+      # ---------- Collect API reports (optional) ----------
+      - run:
+          name: Ensure API report dir exists
+          command: mkdir -p mock-user-auth-tests/reports
+      - store_artifacts:
+          path: mock-user-auth-tests/reports
+          destination: api/reports
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - ui_tests
+      - api_tests:
+          requires:
+            - ui_tests
