@@ -1,0 +1,17 @@
+{
+  "name": "s3-sample-site-e2e-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nightwatch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chromedriver": "^138.0.0",
+    "dotenv": "^17.2.1",
+    "nightwatch": "^3.12.2"
+  }
+}

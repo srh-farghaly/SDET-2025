@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="0">
+
+  <testsuite name="Navigation" id="Navigation"
+    errors="1" failures="0" hostname="" package="Navigation" skipped="1"
+    tests="0" time="0.001000" timestamp="">
+  
+
+  
+    <system-err>
+       An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 139
+Current browser version is 138.0.7204.184 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
+  Verify if ChromeDriver is configured correctly; using:
+  {
+     start_process: true,
+     server_path: &#39;C:\\Users\\Sara.Farghali\\Desktop\\s3-sample-site-e2e-tests\\node_modules\\chromedriver\\lib\\chromedriver\\chromedriver.exe&#39;,
+     port: 9515,
+     host: &#39;localhost&#39;,
+     ssl: false,
+     default_path_prefix: &#39;&#39;,
+     proxy: undefined,
+     cli_args: {}
+  }
+
+ 
+  Set webdriver.log_path in your Nightwatch config to retrieve more logs from ChromeDriver.
+    </system-err>
+  
+
+    
+    <error message="An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 139
+Current browser version is 138.0.7204.184 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe"><![CDATA[
+      SessionNotCreatedError: An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 139
+Current browser version is 138.0.7204.184 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
+    at Object.throwDecodedError (C:\Users\Sara.Farghali\Desktop\s3-sample-site-e2e-tests\node_modules\selenium-webdriver\lib\error.js:521:15)
+    at parseHttpResponse (C:\Users\Sara.Farghali\Desktop\s3-sample-site-e2e-tests\node_modules\selenium-webdriver\lib\http.js:514:13)
+    at Executor.execute (C:\Users\Sara.Farghali\Desktop\s3-sample-site-e2e-tests\node_modules\selenium-webdriver\lib\http.js:446:28)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      ]]></error>  
+
+  
+    
+    <testcase
+      name="TC001 - Home → Contact → Back to Home" classname="Navigation">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

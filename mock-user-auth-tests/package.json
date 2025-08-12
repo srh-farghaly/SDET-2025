@@ -1,0 +1,26 @@
+{
+  "name": "mock-user-auth-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env PORT=3001 nodemon ./node_modules/mock-user-auth/bin/www.js",
+    "test": "jest --runInBand",
+    "test:all": "start-server-and-test dev http://localhost:3000 test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^10.0.0",
+    "dotenv": "^17.2.1",
+    "jest": "^30.0.5",
+    "jest-html-reporter": "^4.3.0",
+    "nodemon": "^3.1.10",
+    "start-server-and-test": "^2.0.13",
+    "supertest": "^7.1.4"
+  },
+  "dependencies": {
+    "mock-user-auth": "^1.0.15"
+  }
+}

@@ -1,0 +1,379 @@
+<html><head><meta charset="utf-8"/><title>Mock User Auth – Test Report</title><style type="text/css">:root {
+  --text-primary: #111;
+  --text-secondary: #4f4f4f;
+  --success: #006633;
+  --success-bright: #80ffbf;
+  --danger: #cc071e;
+  --danger-bright: #fbdfe0;
+  --warning: #995c00;
+  --warning-bright: #ffeea8;
+  --panel: #eee;
+  --border: #949494;
+  --disabled: #6b6b6b;
+}
+
+html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+}
+body {
+  padding: 2rem 1rem;
+}
+.jesthtml-content {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+#title {
+  margin: 0;
+  flex-grow: 1;
+}
+#logo {
+  height: 4rem;
+}
+#timestamp {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+#metadata-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.additional-information-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/** SUMMARY */
+#summary {
+  color: var(--text-primary);
+  display: flex;
+  font-family: monospace;
+  font-size: 1rem;
+}
+#summary > div {
+  margin-right: 0.5rem;
+  background: var(--panel);
+  padding: 1rem;
+  min-width: 15rem;
+}
+#summary > div:last-child {
+  margin-right: 0;
+}
+@media only screen and (max-width: 720px) {
+  #summary {
+    flex-direction: column;
+  }
+  #summary > div {
+    margin-right: 0;
+    margin-top: 1rem;
+  }
+  #summary > div:first-child {
+    margin-top: 0;
+  }
+}
+
+.summary-total {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.summary-passed {
+  color: var(--success);
+  border-left: 0.4rem solid var(--success);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-failed,
+.summary-obsolete-snapshots {
+  color: var(--danger);
+  border-left: 0.4rem solid var(--danger);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-pending {
+  color: var(--warning);
+  border-left: 0.4rem solid var(--warning);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-empty {
+  color: var(--disabled);
+  border-left: 0.4rem solid var(--disabled);
+  margin-bottom: 0.15rem;
+}
+
+.test-result {
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+}
+.test-result:last-child {
+  border: 0;
+}
+.test-result.passed {
+  background-color: var(--success-bright);
+  color: var(--success);
+}
+.test-result.failed {
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.test-result.pending {
+  background-color: var(--warning-bright);
+  color: var(--warning);
+}
+
+.test-info {
+  display: flex;
+  justify-content: space-between;
+}
+.test-suitename {
+  width: 20%;
+  text-align: left;
+  font-weight: bold;
+  word-break: break-word;
+}
+.test-title {
+  width: 40%;
+  text-align: left;
+  font-style: italic;
+}
+.test-status {
+  width: 20%;
+  text-align: right;
+}
+.test-duration {
+  width: 10%;
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.failureMessages {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  border-top: 1px dashed var(--danger);
+}
+.failureMessages.suiteFailure {
+  border-top: none;
+}
+.failureMsg {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.suite-container {
+  margin-bottom: 1rem;
+}
+.suite-info {
+  padding: 1rem;
+  background-color: var(--panel);
+  color: var(--text-secondary);
+  border: 0.15rem solid;
+  border-color: var(--panel);
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.suite-info:hover {
+  border-color: var(--border);
+  cursor: pointer;
+}
+.suite-info .suite-path {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  font-size: 1rem;
+}
+.suite-info .suite-time {
+  margin-left: 1rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.85rem;
+}
+.suite-info .suite-time.warn {
+  background-color: var(--danger);
+  color: #fff;
+}
+.suite-info:before {
+  content: "\2303";
+  display: inline-block;
+  margin-right: 1rem;
+  transform: rotate(180deg) translateY(0.15rem);
+}
+.suite-container[open] .suite-info:before {
+  transform: rotate(0deg) translateY(0.15rem);
+}
+
+/* CONSOLE LOGS */
+.suite-consolelog {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--panel);
+}
+.suite-consolelog-header {
+  font-weight: bold;
+}
+.suite-consolelog-item {
+  padding: 0.5rem;
+}
+.suite-consolelog-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-consolelog-item-origin {
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+.suite-consolelog-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* OBSOLETE SNAPSHOTS */
+.suite-obsolete-snapshots {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.suite-obsolete-snapshots-header {
+  font-weight: bold;
+}
+.suite-obsolete-snapshots-item {
+  padding: 0.5rem;
+}
+.suite-obsolete-snapshots-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-obsolete-snapshots-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+</style></head><body><main class="jesthtml-content"><header><h1 id="title">Mock User Auth – Test Report</h1></header><section id="metadata-container"><div id="timestamp">Started: 2025-08-12 21:05:53</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (6)</div><div class="summary-passed ">1 passed</div><div class="summary-failed ">5 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (26)</div><div class="summary-passed ">12 passed</div><div class="summary-failed ">14 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js</div><div class="suite-time">3.852s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH /users — Update User by Token</div><div class="test-title">Verify that user updates name, email, and password with a valid token</div><div class="test-status">passed</div><div class="test-duration">0.162s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH /users — Update User by Token</div><div class="test-title">Verify that user can update just the name (partial update works)</div><div class="test-status">passed</div><div class="test-duration">0.019s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PATCH /users — Update User by Token</div><div class="test-title">Veridy that data cannot be updated when token is missing</div><div class="test-status">failed</div><div class="test-duration">0.023s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PATCH /users — Update User by Token</div><div class="test-title">Veridy that data cannot be updated when token is invalid</div><div class="test-status">failed</div><div class="test-duration">0.016s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PATCH /users — Update User by Token</div><div class="test-title">rejects using an email that already belongs to another user</div><div class="test-status">failed</div><div class="test-duration">0.02s</div></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at _log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:139:11)
+    at Object.configDotenv (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:317:5)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:331:25)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js:1:19)
+    at Runtime._execModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:1266:24)
+    at Runtime._loadModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:942:12)
+    at Runtime.requireModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:830:12)
+    at jestAdapter (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\runner.js:95:13)
+    at runTestInternal (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:275:16)
+    at runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:343:7)</pre><pre class="suite-consolelog-item-message">[dotenv@17.2.1] injecting env (2) from .env.test -- tip: ⚙️  override existing env vars with { override: true }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js:34:13)
+    at Promise.finally.completed (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:1559:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:1499:10)
+    at _callCircusTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:1009:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:949:3)
+    at _runTestsForDescribeBlock (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:839:13)
+    at _runTestsForDescribeBlock (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:829:11)
+    at run (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:757:3)
+    at runAndTransformResultsToJestFormat (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\jestAdapterInit.js:1920:21)
+    at jestAdapter (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\runner.js:101:19)
+    at runTestInternal (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:275:16)
+    at runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:343:7)</pre><pre class="suite-consolelog-item-message">value of created token is as follow: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJfMTc1NTAyMTk1Nzg3Nl82MjdAZXhhbXBsZS5jb20iLCJpZCI6MTgyMCwiaWF0IjoxNzU1MDIxOTU4LCJleHAiOjE3NTUxMDgzNTh9.SNZdz9IEse5H7g3emgtdQ2DsU_rhoK9aEQKjCu9cdJ8</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js:38:13)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre><pre class="suite-consolelog-item-message">{
+  data: {
+    id: 1820,
+    name: 'Test User',
+    email: 'user_1755021958017_842@example.com',
+    password: 'P@ssw0rd123',
+    imageUrl: 'https://almsaeedstudio.com/themes/AdminLTE/dist/img/user2-160x160.jpg'
+  },
+  message: 'User updated with success!'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js:44:13)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre><pre class="suite-consolelog-item-message">{
+  data: {
+    id: 81192,
+    name: 'NewNameOnly',
+    email: 'user_1755021958036_418@example.com',
+    password: 'P@ssw0rd123',
+    imageUrl: 'https://almsaeedstudio.com/themes/AdminLTE/dist/img/user2-160x160.jpg'
+  },
+  message: 'User updated with success!'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js:51:13)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre><pre class="suite-consolelog-item-message">{ message: 'jwt must be provided' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js:58:13)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre><pre class="suite-consolelog-item-message">{ message: 'jwt malformed' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\patch.user.e2e.test.js:69:13)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre><pre class="suite-consolelog-item-message">{
+  data: {
+    id: 74857,
+    name: 'Test User',
+    email: 'user_1755021958110_850@example.com',
+    password: 'P@ssw0rd123',
+    imageUrl: 'https://almsaeedstudio.com/themes/AdminLTE/dist/img/user2-160x160.jpg'
+  },
+  message: 'User updated with success!'
+}</pre></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\get.user.e2e.test.js</div><div class="suite-time">0.315s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /users — Fetch user by token</div><div class="test-title">Verify that user data are correctly returned with a valid token</div><div class="test-status">passed</div><div class="test-duration">0.028s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">GET /users — Fetch user by token</div><div class="test-title">Verify that user data cannot be fetched when token is missing</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">GET /users — Fetch user by token</div><div class="test-title">Verify that user data cannot be fetched when token is invalid</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">GET /users — Fetch user by token</div><div class="test-title">rejects when user was deleted but old token is used (401)</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at _log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:139:11)
+    at Object.configDotenv (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:317:5)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:331:25)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\get.user.e2e.test.js:1:19)
+    at Runtime._execModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:1266:24)
+    at Runtime._loadModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:942:12)
+    at Runtime.requireModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:830:12)
+    at jestAdapter (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\runner.js:95:13)
+    at runTestInternal (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:275:16)
+    at runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:343:7)</pre><pre class="suite-consolelog-item-message">[dotenv@17.2.1] injecting env (2) from .env.test -- tip: 📡 auto-backup env with Radar: https://dotenvx.com/radar</pre></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\auth.e2e.test.js</div><div class="suite-time">0.362s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /auth endpoint</div><div class="test-title">Verify that a newly created user can authenticate and receive a token</div><div class="test-status">passed</div><div class="test-duration">0.045s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /auth endpoint</div><div class="test-title">Invalid password should not authenticate the user</div><div class="test-status">passed</div><div class="test-duration">0.017s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /auth endpoint</div><div class="test-title">Invalid email should not authenticate the user</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">POST /auth endpoint</div><div class="test-title">Empty email field should not return a token</div><div class="test-status">failed</div><div class="test-duration">0.008s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">POST /auth endpoint</div><div class="test-title">Empty password field should not returna token</div><div class="test-status">failed</div><div class="test-duration">0.005s</div></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at _log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:139:11)
+    at Object.configDotenv (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:317:5)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:331:25)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\auth.e2e.test.js:1:19)
+    at Runtime._execModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:1266:24)
+    at Runtime._loadModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:942:12)
+    at Runtime.requireModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:830:12)
+    at jestAdapter (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\runner.js:95:13)
+    at runTestInternal (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:275:16)
+    at runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:343:7)</pre><pre class="suite-consolelog-item-message">[dotenv@17.2.1] injecting env (2) from .env.test -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\auth.e2e.test.js:39:13)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre><pre class="suite-consolelog-item-message">{
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJfMTc1NTAyMTk1ODgwN18yNDJAZXhhbXBsZS5jb20iLCJpZCI6MjA0MjMsImlhdCI6MTc1NTAyMTk1OCwiZXhwIjoxNzU1MTA4MzU4fQ.nxyEf8ZC52VQ486Lv9m4r3e1hG7OalhuXl5NzPLYDLA'
+}</pre></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\users.delete.e2e.test.js</div><div class="suite-time">0.343s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE /users — Delete User by Token</div><div class="test-title">Verify user can be deleted with a valid token, and that the token becomes invalid afterward</div><div class="test-status">passed</div><div class="test-duration">0.024s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">DELETE /users — Delete User by Token</div><div class="test-title">Verify deletion is rejected when Authorization header is missing</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">DELETE /users — Delete User by Token</div><div class="test-title">Verify deletion is rejected when Authorization header is invalid</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE /users — Delete User by Token</div><div class="test-title">Verify that if a user is deleted it cannot be deleted again</div><div class="test-status">passed</div><div class="test-duration">0.013s</div></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at _log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:139:11)
+    at Object.configDotenv (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:317:5)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:331:25)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\users.delete.e2e.test.js:1:19)
+    at Runtime._execModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:1266:24)
+    at Runtime._loadModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:942:12)
+    at Runtime.requireModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:830:12)
+    at jestAdapter (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\runner.js:95:13)
+    at runTestInternal (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:275:16)
+    at runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:343:7)</pre><pre class="suite-consolelog-item-message">[dotenv@17.2.1] injecting env (2) from .env.test -- tip: ⚙️  write to custom object with { processEnv: myObject }</pre></div></div></details><details id="suite-5" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\create.e2e.test.js</div><div class="suite-time">0.231s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">POST /users — User Creation</div><div class="test-title">creates a user successfully and returns a token</div><div class="test-status">failed</div><div class="test-duration">0.013s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">POST /users — User Creation</div><div class="test-title">Verify that user cannot be created without a password</div><div class="test-status">failed</div><div class="test-duration">0.005s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">POST /users — User Creation</div><div class="test-title">Verify that user cannot be created without an Email</div><div class="test-status">failed</div><div class="test-duration">0.005s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">POST /users — User Creation</div><div class="test-title">Verify that User cannot be created twice</div><div class="test-status">failed</div><div class="test-duration">0.007s</div></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at _log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:139:11)
+    at Object.configDotenv (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:317:5)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:331:25)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\create.e2e.test.js:1:19)
+    at Runtime._execModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:1266:24)
+    at Runtime._loadModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:942:12)
+    at Runtime.requireModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:830:12)
+    at jestAdapter (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\runner.js:95:13)
+    at runTestInternal (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:275:16)
+    at runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:343:7)</pre><pre class="suite-consolelog-item-message">[dotenv@17.2.1] injecting env (2) from .env.test -- tip: 📡 version env with Radar: https://dotenvx.com/radar</pre></div></div></details><details id="suite-6" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\zz.deleteAllUsers.e2e.test.js</div><div class="suite-time">0.244s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE /all-users — Admin purge</div><div class="test-title">deletes ALL users with a valid admin key (200)</div><div class="test-status">passed</div><div class="test-duration">0.033s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE /all-users — Admin purge</div><div class="test-title">rejects when admin key is missing</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE /all-users — Admin purge</div><div class="test-title">rejects when admin key is wrong</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE /all-users — Admin purge</div><div class="test-title">Verify deleting all users twice returns expected status codes</div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at _log (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:139:11)
+    at Object.configDotenv (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:317:5)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\dotenv\lib\main.js:331:25)
+    at Object.config (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\tests\zz.deleteAllUsers.e2e.test.js:1:19)
+    at Runtime._execModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:1266:24)
+    at Runtime._loadModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:942:12)
+    at Runtime.requireModule (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runtime\build\index.js:830:12)
+    at jestAdapter (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-circus\build\runner.js:95:13)
+    at runTestInternal (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:275:16)
+    at runTest (C:\Users\Sara.Farghali\Desktop\SDET-2025\mock-user-auth-tests\node_modules\jest-runner\build\index.js:343:7)</pre><pre class="suite-consolelog-item-message">[dotenv@17.2.1] injecting env (2) from .env.test -- tip: ⚙️  write to custom object with { processEnv: myObject }</pre></div></div></details></main></body></html>

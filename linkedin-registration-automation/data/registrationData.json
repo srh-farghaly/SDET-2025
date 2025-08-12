@@ -1,0 +1,7 @@
+{
+  "validEmail": "testuser@example.com",
+  "validPassword": "SecurePass123",
+  "firstName": "Sara",
+  "lastName": "Farghaly",
+  "securityCheckText": "Security verification"
+}
